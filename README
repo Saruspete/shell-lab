@@ -1,0 +1,46 @@
+====== SHELL LAB ======
+
+Welcome to the Shell Laboratory... We aim to provide a set of 
+
+==== /examples: full scripts examples
+
+This folder should contain sample scripts that are self-sufficient and serve
+an usual purpose.
+
+
+==== /snippets: snippets of code to be reused in your scripts
+
+
+==== /tests: testing zone for features and differences between shells
+
+
+  - dataset/       Dataset to be used for the tests
+  - interpreters/  Shell interpreters to be used for the tests
+  - tests/         The tests, grouped by 
+
+
+== interpreters
+
+
+== tests
+
+The tests are small pieces of code where they produce an output to be expected.
+This expected output is placed in a .out file, having the same name as the
+script.
+
+Each test is expected to have a header to be parsed to give its arguments,
+expected return code, and other details to be searched for
+
+
+===== Writing new tests
+
+As an example, if you want to create example1, you'll have to create:
+- example1.sh:       The shell script doing the behavior to be tested
+- example1.check.sh: Will check the results of example1.sh are as expected.
+
+The check script will be called 2 times, each with the step as first argument:
+- pre : Just before the run
+- post: Just after the run. The 2nd argument is the return code of the script
+
+
+

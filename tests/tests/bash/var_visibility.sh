@@ -1,4 +1,3 @@
-#!/bin/bash
 
 vgr="global"
 vgro="global"

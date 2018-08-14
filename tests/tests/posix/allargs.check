@@ -1,0 +1,57 @@
+#!/bin/true
+
+[ -z "$SLT_RUNDIR" ] && exit 99
+
+slt_check_pre() { :; }
+slt_check_post() {
+
+	# This is the expected output
+	cat >| $SLT_RUNDIR/run.out.check  <<-'EOT'
+	Using $@
+	- hello
+	- world
+	- this
+	- is
+	- a
+	- long
+	- sequence
+	- finally...
+
+	Using $*
+	- hello
+	- world
+	- this
+	- is
+	- a
+	- long
+	- sequence
+	- finally...
+
+	Using "$@"
+	- hello
+	- world
+	- this is a long sequence
+	- finally...
+
+	Using "$*"
+	- hello world this is a long sequence finally...
+
+	Using "$*" + IFS=:
+	- hello:world:this is a long sequence:finally...
+	EOT
+
+	# No error to be expected
+	>| "$SLT_RUNDIR/run.err.check"
+
+	diff --brief "$SLT_RUNDIR/run.out"{,.check} >/dev/null || exit 1
+	diff --brief "$SLT_RUNDIR/run.err"{,.check} >/dev/null || exit 1
+
+		exit 0
+
+}
+
+
+slt_check_diff() {
+
+	$SLT_DIFF "$SLT_RUNDIR/run.out" "$SLT_RUNDIR/run.out.check"
+}

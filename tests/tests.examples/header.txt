@@ -1,0 +1,4 @@
+## SLT-Name: Example Name 1
+## SLT-Desc: This is the description of this example test
+## SLT-Args: "arg1" "arg2 with spaces"
+## SLT-stdin:
