@@ -11,7 +11,8 @@ export LC_ALL=C
 export PATH="/bin:/sbin:/usr/bin:/usr/sbin:${PATH:-}"
 
 # And some helpful functions
-export SLT_DIFF="diff --side-by-side --suppress-common-lines"
+#export SLT_DIFF="diff --side-by-side --suppress-common-lines"
+export SLT_DIFF="diff"
 
 
 TEMPBASE="/tmp/shelllab/run.$$"
@@ -21,7 +22,7 @@ INTERP_BASE="$MYPATH/interpreters"
 INTERP_LIST=""
 
 # Declare the tests to run
-TESTS_LIST="$MYPATH/tests/posix/allargs.sh $MYPATH/tests/posix/arg0.sh"
+TESTS_LIST="$MYPATH/tests/posix/allargs.sh $MYPATH/tests/posix/arg0.sh $MYPATH/tests/ksh/arg0.sh"
 INTERP_LIST="/bin/bash /bin/ksh"
 
 
@@ -94,7 +95,10 @@ test_runall() (
 
 			log_info -n "== '${interp##*/}' => "
 
-			export SLT_RUNDIR="$(temp_create "${testscript##*/}.${interp##*/}")"
+			_testscriptname="${testscript##*/}"
+			_family="${testscript%/*}"
+			_family="${_family##*/}"
+			export SLT_RUNDIR="$(temp_create "$_family.$_testscriptname.${interp##*/}")"
 
 			# Pre-check
 			check_test "$testscript" "pre"
@@ -115,9 +119,15 @@ test_runall() (
 
 			log_info " $_reschk (Run: $_resrun)"
 
-			[ $_reschk -ne 0 ] && check_test "$testscript" "diff"
+			
+			if [ $_reschk -ne 0 ]; then
+				log_info "== Diff:"
+				check_test "$testscript" "diff"
+			fi
 
 		done
+		
+		log_info
 	done
 )
 

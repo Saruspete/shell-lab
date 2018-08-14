@@ -5,10 +5,10 @@
 slt_check_pre() { :; }
 slt_check_post() {
 
-	scriptname="$MYPATH/tests/posix/arg0.sh"
+	scriptname="$MYPATH/tests/ksh/arg0.sh"
 	# This is the expected output
 	cat >| $SLT_RUNDIR/run.out.check  <<-EOT
-		$scriptname / $scriptname / $scriptname
+		$scriptname / $scriptname / $scriptname / c
 	EOT
 
 	# No error to be expected
@@ -17,7 +17,7 @@ slt_check_post() {
 	diff --brief "$SLT_RUNDIR/run.out"{,.check} >/dev/null || exit 1
 	diff --brief "$SLT_RUNDIR/run.err"{,.check} >/dev/null || exit 1
 
-		exit 0
+	exit 0
 
 }
 
