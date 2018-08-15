@@ -1,4 +1,5 @@
 #!/bin/true
+# vim: ft=sh
 
 [ -z "$SLT_RUNDIR" ] && exit 99
 
