@@ -3,7 +3,7 @@
 set -o nounset
 set -o noclobber
 
-MYSELF="$(readlink -f $0)"
+MYSELF="$(readlink -f "$0")"
 export MYPATH="${MYSELF%/*}"
 
 # Reset to more secure values
