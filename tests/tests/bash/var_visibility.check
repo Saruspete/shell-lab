@@ -1,0 +1,48 @@
+#!/bin/true
+# vim: ft=sh
+
+slt_check_pre() { :; }
+
+slt_check_post() {
+
+	cat > $SLT_RUNDIR/run.out.check <<-EOT
+	Inside f:
+	 - Global implicit: global
+	 - Global typeset:  global
+	
+	After calling f
+	 - Global implicit: global
+	 - Global typeset:  global
+	 - Global implicit override: from f
+	 - Global typeset  override: from f
+	 - local f implicit: from f
+	 - local f typeset: 
+	
+	Inside g:
+	 - Global implicit: global
+	 - Global typeset:  global
+	
+	After calling g
+	 - Global implicit: global
+	 - Global typeset:  global
+	 - Global implicit override: from g
+	 - Global typeset  override: from g
+	 - local f implicit: from g
+	 - local f typeset: 
+	EOT
+
+	> $SLT_RUNDIR/run.err.check
+
+	r=0
+	diff -q $SLT_RUNDIR/run.out{,.check} >/dev/null
+	r=$(($r + $?))
+	diff -q $SLT_RUNDIR/run.err{,.check} >/dev/null
+	r=$(($r + $?))
+
+	return $r
+}
+	
+slt_check_diff() {
+	$SLT_DIFF $SLT_RUNDIR/run.out{,.check}
+	$SLT_DIFF $SLT_RUNDIR/run.err{,.check}
+}
