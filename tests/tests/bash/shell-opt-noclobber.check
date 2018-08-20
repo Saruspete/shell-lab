@@ -14,7 +14,7 @@ slt_check_post() {
 	EOT
 
 	cat >| $SLT_RUNDIR/run.err.check <<-EOT
-	$scriptname: line 10: $SLT_RUNDIR/plop: cannot overwrite existing file
+	$scriptname: line 6: $SLT_RUNDIR/plop: cannot overwrite existing file
 	EOT
 
 	diff --brief "$SLT_RUNDIR/run.out"{,.check} >/dev/null || exit 1
